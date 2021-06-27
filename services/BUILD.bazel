@@ -1,0 +1,24 @@
+load("@rules_java//java:defs.bzl", "java_binary", "java_test")
+
+java_binary(
+    name = "FeatureEngineering",
+    srcs = ["src/main/java/com/yasrs/offline/spark/featureeng/FeatureEngineering.java"],
+    main_class = "com.yasrs.offline.spark.featureeng.FeatureEngineering",
+    deps = [
+        "@maven//:org_apache_spark_spark_catalyst_2_11",
+        "@maven//:org_apache_spark_spark_core_2_11",
+        "@maven//:org_apache_spark_spark_sql_2_11",
+    ],
+)
+
+java_test(
+    name = "FeatureEngineeringTest",
+    srcs = glob(["src/test/**/*.java"]),
+    deps = [
+        ":FeatureEngineering",
+        "@maven//:junit_junit",
+        "@maven//:org_apache_spark_spark_core_2_11",
+        "@maven//:org_apache_spark_spark_sql_2_11",
+        "@maven//:org_mockito_mockito_core",
+    ],
+)

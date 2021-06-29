@@ -5,12 +5,15 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class FeatureEngineeringTest {
 
     private SparkSession spark = null;
+
+    private static final String movies = "data/sampledata/movies.csv";
 
     @Before
     public void setUp() throws Exception {
@@ -25,9 +28,8 @@ public class FeatureEngineeringTest {
 
     @Test
     public void readMovies() throws Exception {
-        Dataset<Row> movieSamples = spark.read().format("csv").option("header", "true")
-                .load("data/sampledata/movies.csv");
-
+        Dataset<Row> movieSamples = spark.read().format("csv").option("header", "true").load(movies);
+        Assert.assertNotNull(movieSamples);
     }
 
 }

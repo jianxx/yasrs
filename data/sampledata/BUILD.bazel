@@ -1,0 +1,6 @@
+filegroup(
+    name = "movies",
+    testonly = 1,
+    srcs = ["movies.csv"],
+    visibility = ["//visibility:public"],
+)

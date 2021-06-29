@@ -1,5 +1,6 @@
 package com.yasrs.offline.spark.featureeng;
 
+import org.apache.spark.SparkConf;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -13,7 +14,8 @@ public class FeatureEngineeringTest {
 
     @Before
     public void setUp() throws Exception {
-        spark = SparkSession.builder().appName("featureEngineering").getOrCreate();
+        SparkConf conf = new SparkConf().setMaster("local");
+        spark = SparkSession.builder().appName("featureEngineering").config(conf).getOrCreate();
     }
 
     @After
@@ -21,9 +23,10 @@ public class FeatureEngineeringTest {
         spark.stop();
     }
 
+    @Test
     public void readMovies() throws Exception {
         Dataset<Row> movieSamples = spark.read().format("csv").option("header", "true")
-                .load("examples/src/main/resources/people.csv");
+                .load("data/sampledata/movies.csv");
 
     }
 

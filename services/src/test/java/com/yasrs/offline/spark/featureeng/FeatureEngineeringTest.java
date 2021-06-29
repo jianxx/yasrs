@@ -12,13 +12,17 @@ import org.junit.Test;
 public class FeatureEngineeringTest {
 
     private SparkSession spark = null;
+    private FeatureEngineering eng = null;
 
     private static final String movies = "data/sampledata/movies.csv";
+    private Dataset<Row> movieSamples = null;
 
     @Before
     public void setUp() throws Exception {
         SparkConf conf = new SparkConf().setMaster("local");
         spark = SparkSession.builder().appName("featureEngineering").config(conf).getOrCreate();
+        movieSamples = spark.read().format("csv").option("header", "true").load(movies);
+        eng = new FeatureEngineering();
     }
 
     @After
@@ -28,8 +32,14 @@ public class FeatureEngineeringTest {
 
     @Test
     public void readMovies() throws Exception {
-        Dataset<Row> movieSamples = spark.read().format("csv").option("header", "true").load(movies);
         Assert.assertNotNull(movieSamples);
     }
 
+    @Test
+    public void oneHotEncoder() throws Exception {
+        Dataset<Row> oneHotEncoderSamples = eng.oneHotEncoder(movieSamples);
+        Assert.assertNotNull(oneHotEncoderSamples);
+        oneHotEncoderSamples.printSchema();
+        oneHotEncoderSamples.show(10);
+    }
 }

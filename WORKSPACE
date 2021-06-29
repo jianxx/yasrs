@@ -55,6 +55,7 @@ maven_install(
         "org.apache.spark:spark-core_2.11:2.4.3",
         "org.apache.spark:spark-sql_2.11:2.4.3",
         "org.apache.spark:spark-catalyst_2.11:2.4.3",
+        "org.apache.spark:spark-mllib_2.11:2.4.3",
     ] + IO_GRPC_GRPC_JAVA_ARTIFACTS,
     generate_compat_repositories = True,
     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,

@@ -22,7 +22,7 @@ public class FeatureEngineeringTest {
         SparkConf conf = new SparkConf().setMaster("local");
         spark = SparkSession.builder().appName("featureEngineering").config(conf).getOrCreate();
         movieSamples = spark.read().format("csv").option("header", "true").load(movies);
-        eng = new FeatureEngineering();
+        eng = new FeatureEngineering(spark);
     }
 
     @After
@@ -41,5 +41,9 @@ public class FeatureEngineeringTest {
         Assert.assertNotNull(oneHotEncoderSamples);
         oneHotEncoderSamples.printSchema();
         oneHotEncoderSamples.show(10);
+    }
+
+    public void splitAndSaveTrainingData() throws Exception {
+
     }
 }
